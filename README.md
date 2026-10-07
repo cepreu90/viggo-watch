@@ -29,10 +29,10 @@ notifications start from the second run onward.
 
 ## Notes / limitations
 
-- Built and tested against one school's ViGGO instance
-  (`vibyfriskole.viggo.dk`). Page structure may differ slightly between
-  schools or change over time - if `docker compose logs` shows nothing
-  being found, check `app/main.py`'s CSS selectors against your instance.
+- Built and tested against one school's ViGGO instance. Page structure may
+  differ slightly between schools or change over time - if
+  `docker compose logs` shows nothing being found, check `app/main.py`'s
+  CSS selectors against your instance.
 - The device fingerprint trick relies on undocumented ViGGO behavior and
   could stop working if they change it. If so, the app alerts you via ntfy
   that it needs a fresh fingerprint (re-run step 2 above).

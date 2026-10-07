@@ -23,11 +23,9 @@ ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-opus-5")
 claude = anthropic.Anthropic() if os.environ.get("ANTHROPIC_API_KEY") else None
 
 POLL_SECONDS = int(os.environ.get("POLL_SECONDS", "1800"))
-ROOM_IDS = [r.strip() for r in os.environ.get("ROOM_IDS", "81,44,75").split(",") if r.strip()]
-ROOM_NAMES = dict(
-    p.split(":", 1) for p in os.environ.get("ROOM_NAMES", "81:0. klasse,44:SFO,75:Skoven").split(",") if ":" in p
-)
-BULLETIN_TYPE_IDS = [b.strip() for b in os.environ.get("BULLETIN_TYPE_IDS", "34").split(",") if b.strip()]
+ROOM_IDS = [r.strip() for r in os.environ.get("ROOM_IDS", "").split(",") if r.strip()]
+ROOM_NAMES = dict(p.split(":", 1) for p in os.environ.get("ROOM_NAMES", "").split(",") if ":" in p)
+BULLETIN_TYPE_IDS = [b.strip() for b in os.environ.get("BULLETIN_TYPE_IDS", "").split(",") if b.strip()]
 
 STATE_PATH = os.environ.get("STATE_PATH", "/data/seen.json")
 HEALTHCHECK_URL = os.environ.get("HEALTHCHECK_URL", "").rstrip("/")
