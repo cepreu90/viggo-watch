@@ -31,7 +31,17 @@ STATE_PATH = os.environ.get("STATE_PATH", "/data/seen.json")
 HEALTHCHECK_URL = os.environ.get("HEALTHCHECK_URL", "").rstrip("/")
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (viggo-watch home notifier)",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "da-DK,da;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Sec-CH-UA": '"Chromium";v="151", "Google Chrome";v="151", "Not=A?Brand";v="99"',
+    "Sec-CH-UA-Mobile": "?0",
+    "Sec-CH-UA-Platform": '"Linux"',
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
 }
 
 
@@ -106,6 +116,10 @@ def clear_alert(state, key):
 
 def login(session, state):
     session.get(f"{BASE}/Basic/Account/Login?returnUrl=/", headers=HEADERS, timeout=20)
+    post_headers = dict(HEADERS)
+    post_headers["Content-Type"] = "application/x-www-form-urlencoded"
+    post_headers["Origin"] = BASE
+    post_headers["Referer"] = f"{BASE}/Basic/Account/Login?returnUrl=/"
     resp = session.post(
         f"{BASE}/Basic/Account/Login",
         data={
@@ -114,7 +128,7 @@ def login(session, state):
             "returnUrl": "/",
             "fingerprint": FINGERPRINT,
         },
-        headers=HEADERS,
+        headers=post_headers,
         timeout=20,
         allow_redirects=True,
     )
